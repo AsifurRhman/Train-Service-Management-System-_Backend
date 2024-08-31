@@ -1,3 +1,10 @@
+
+
+import { z } from 'zod';
+
+
+
+
 export const validateUserInput = (name, email, password) => {
   if (!name || !email || !password) {
     return { isOk: false, message: 'Please fill all the fields' };
@@ -7,7 +14,7 @@ export const validateUserInput = (name, email, password) => {
   }
   return null;
 };
-import { z } from 'zod';
+
 
 export const loginValidationSchema = z.object({
   body: z.object({
