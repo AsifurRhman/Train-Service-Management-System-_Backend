@@ -1,12 +1,15 @@
-
 import { TransactionModel, WalletModel } from './wallet.model.js';
 
-
 export const addFunds = async (userId, amount) => {
+  amount = Number(amount);
+  if (isNaN(amount) || amount <= 0) {
+    throw new Error('Invalid amount');
+  }
+
   const wallet = await WalletModel.findOneAndUpdate(
     { userId },
     { $inc: { balance: amount } },
-    { new: true, upsert: true }
+    { new: true, upsert: true, runValidators: true }
   );
 
   await TransactionModel.create({
@@ -19,23 +22,19 @@ export const addFunds = async (userId, amount) => {
   return wallet;
 };
 
-export const getBalance = async (userId) => {
-  const wallet = await WalletModel.findOne({ userId });
-  return wallet ? wallet.balance : null;
-};
-
-export const getTransactionHistory = async (userId) => {
-  return TransactionModel.find({ userId }).sort({ createdAt: -1 });
-};
-
 export const deductFunds = async (userId, amount) => {
+  amount = Number(amount);
+  if (isNaN(amount) || amount <= 0) {
+    throw new Error('Invalid amount');
+  }
+
   const wallet = await WalletModel.findOne({ userId });
   if (!wallet || wallet.balance < amount) {
     throw new Error('Insufficient funds');
   }
 
   wallet.balance -= amount;
-  await wallet.save();
+  await wallet.save({ runValidators: true });
 
   await TransactionModel.create({
     userId,
@@ -45,4 +44,9 @@ export const deductFunds = async (userId, amount) => {
   });
 
   return wallet;
+};
+
+export const getBalance = async (userId) => {
+  const wallet = await WalletModel.findOne({ userId });
+  return wallet ? wallet.balance : 0;
 };
