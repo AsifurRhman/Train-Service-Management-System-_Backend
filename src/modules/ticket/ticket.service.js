@@ -26,16 +26,30 @@ export const purchaseTicket = async (userId, trainId, from, to, departureTime, p
       // Count how many tickets the user already has for this train and departure time
       const ticketCount = await TicketModel.countDocuments(query);
       console.log('Existing Ticket Count:', ticketCount);
-  
+      
+      const currentDate = new Date();
+      if (departureTime < currentDate) {
+        return {
+          success: false,
+          message: "You can't purchase tickets for past dates."
+        };
+      }
       // If the user already has 5 tickets, throw an error
       if (ticketCount >= 5) {
-        throw new Error('Your purchase is full.');
+        return {
+          success: false,
+          message: 'One user can purchase 5 tickets at a time.'
+        }
       }
   
       // Check if the user has sufficient balance
       const balance = await getBalance(userId);
       if (balance < price) {
-        throw new Error('Insufficient funds');
+        return {
+          success: false,
+          message: 'Insufficient funds'
+        }
+        
       }
   console.log(balance,"balance")
       // Create the new ticket
@@ -46,7 +60,7 @@ export const purchaseTicket = async (userId, trainId, from, to, departureTime, p
       // Deduct funds from the user's wallet
       await deductFunds(userId, price);
   
-      return ticket;
+      return { success: true, ticket };
     } catch (error) {
       console.error('Error in purchaseTicket:', error.message);
   

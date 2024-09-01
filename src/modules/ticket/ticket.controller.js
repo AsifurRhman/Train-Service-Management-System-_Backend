@@ -8,10 +8,10 @@ export const purchaseTicket = catchAsync(async (req, res) => {
   const { userId, trainId, from, to, departureTime, price } = req.body;
   
     const ticket = await ticketService.purchaseTicket(userId, trainId, from, to, departureTime, price);
-    
-    if (!ticket) {
+    console.log(ticket,"ticket")
+    if (!ticket.success) {
      return sendError(res, httpStatus.BAD_REQUEST, {
-        message: 'Ticket purchased failed!.',
+        message: ticket.message,
       });
     }
   sendResponse(res, {

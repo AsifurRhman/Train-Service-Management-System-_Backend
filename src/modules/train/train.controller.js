@@ -5,7 +5,7 @@ import * as trainService from './train.service.js';
 import sendError from '../../utils/sendError.js';
 
 export const createTrain = catchAsync(async (req, res) => {
-  console.log(req.body, "req.body");
+
   const trainData = { ...req.body, createdBy: req.user.id };
    
   const train = await trainService.createTrain(trainData);
