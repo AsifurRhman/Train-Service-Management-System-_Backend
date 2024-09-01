@@ -1,8 +1,6 @@
 import express from 'express';
 
 
-
-
 import { addTrainStop, createTrain, deleteTrain, getAllTrains, getTrain, getTrainSchedule, updateTrain, updateTrainStop } from './train.controller.js';
 
 import { adminMiddleware } from '../../middleware/auth.js';

@@ -55,24 +55,7 @@ export const purchaseTicket = async (userId, trainId, from, to, departureTime, p
   };
   
   
-// export const purchaseTicket = async (userId, trainId, from, to, departureTime, price) => {
-//   // Check if user has sufficient balance
-//     const balance = await getBalance(userId);
-    
-//   if (balance < price) {
-//     throw new Error('Insufficient funds');
-//   }
-//   const newTicket = { userId, trainId, from, to, departureTime, price }
-    
-//       // Create ticket
-//   const ticket = await TicketModel.create(newTicket);
-//   // Deduct funds from wallet
-//   await deductFunds(userId, price);
-//   return ticket;
 
-    
-
-// };
 
 export const getTicketsByUser = async (userId) => {
   return TicketModel.find({ userId });

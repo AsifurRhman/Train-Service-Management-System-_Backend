@@ -6,6 +6,7 @@ import router from './src/routes/index.js';
 import cron from 'node-cron';
 import globalErrorHandler from './src/middleware/globalErrorHandler.js';
 import notFoundRoute from './src/middleware/notFoundRoute.js';
+import { updateTicketStatus } from './src/modules/ticket/ticket.utils.js';
 dotenv.config();
 const PORT = process.env.PORT || 5000;
 
@@ -26,7 +27,13 @@ app.get('/', (req, res) => {
   res.send('Welcome to the server!');
 });
 
-
+// Run the ticket status update every min
+cron.schedule('* * * * *', () => {
+  console.log('Running ticket status update...');
+  updateTicketStatus().catch((err) =>
+    console.error('Error updating ticket status:', err)
+  );
+});
 
 app.use('*', notFoundRoute);
 app.use(globalErrorHandler);

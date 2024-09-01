@@ -2,9 +2,6 @@ import bcrypt from 'bcrypt';
 import { UserModel } from './user.model.js';
 
 import httpStatus from 'http-status';
-import jwt from 'jsonwebtoken';
-import nodemailer from "nodemailer";
-import { v4 as uuidv4 } from 'uuid';
 import catchAsync from '../../utils/catchAsync.js';
 import sendError from '../../utils/sendError.js';
 import sendResponse from '../../utils/sendResponse.js';
