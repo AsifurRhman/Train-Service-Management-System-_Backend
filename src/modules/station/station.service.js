@@ -4,10 +4,17 @@ import { StationModel } from "./station.model.js";
 export const createStation = async (stationData) => {
 
     const existingStation = await StationModel.findOne({ name: stationData.name });
-    if (existingStation) {
-        throw new Error('A station with this name already exists.');
-      }
-    return StationModel.create(stationData);
+  if (existingStation) {
+    return {
+      success: false,
+      message: 'A station with this name already exists.'
+    }
+        
+  }
+  
+
+  const create = StationModel.create(stationData);
+  return {success:true,create}
   };
 
 export const updateStationById = async (id, updateData) => {

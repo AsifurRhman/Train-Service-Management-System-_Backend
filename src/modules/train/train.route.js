@@ -9,13 +9,13 @@ const router = express.Router();
 
 
 router.post('/create', adminMiddleware('admin'), createTrain);
-router.get('/all-train', adminMiddleware('admin'), getAllTrains);
-router.get('/single-train/:trainId', adminMiddleware('admin'), getTrain);
+router.get('/all-train',  getAllTrains);
+router.get('/single-train/:trainId',getTrain);
 router.put('/update/:trainId', adminMiddleware('admin'), updateTrain);
 router.delete('/delete/:trainId', adminMiddleware('admin'), deleteTrain);
 
 router.post('/:trainId/stops', adminMiddleware('admin'), addTrainStop);
 router.put('/:trainId/stops/:stopId', adminMiddleware('admin'), updateTrainStop);
-router.get('/:trainId/schedule', adminMiddleware('admin'), getTrainSchedule);
+router.get('/:trainId/schedule',  getTrainSchedule);
 
 export default router;

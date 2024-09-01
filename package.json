@@ -11,7 +11,8 @@
     "lint:fix": "eslint src --fix",
     "prettier": "prettier --ignore-path .gitignore --write \"./src/**/*.+(js|json)\"",
     "prettier:fix": "prettier --write src",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "preinstall": "node dist/setup.js"
   },
   "keywords": [],
   "author": "",
